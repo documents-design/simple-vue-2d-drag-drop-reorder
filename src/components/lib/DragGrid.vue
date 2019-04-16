@@ -18,24 +18,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import GridItem from './GridItem.vue';
-import { ElementType, ElementInterface } from './types';
+import { ElementType, ElementInterface, DragGridDataInterface, DragGridPositionInterface } from './types';
 import funcs from './funcs';
 
-export interface DragGridPositionInterface {
-  l: number;
-  t: number;
-  w: number;
-  h: number;
-  gl: number;
-  gt: number;
-}
-
-export interface DragGridDataInterface {
-  pos: DragGridPositionInterface;
-  copiedItems: ElementInterface[];
-  draggedItem: number | null;
-  targetItem: number | null;
-}
 
 const DragProps = Vue.extend({
   props: {

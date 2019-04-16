@@ -17,14 +17,6 @@
           :renderer="$options.components.ItemRenderer"
         ></drag-grid>
       </div>
-      <div class="grid-8">
-        <drag-grid
-          :items="items"
-          @update="updateItems"
-          :clone-function="a => JSON.parse(JSON.stringify(a))"
-          :renderer="$options.components.ItemRenderer"
-        ></drag-grid>
-      </div>
     </main>
   </div>
 </template>

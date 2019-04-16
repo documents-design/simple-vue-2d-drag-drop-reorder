@@ -19,7 +19,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { ElementType } from './types';
 
-import { DragGridPositionInterface } from './DragGrid.vue';
+import { DragGridPositionInterface } from './types';
 
 const GridItemProps = Vue.extend({
   props: {
