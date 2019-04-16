@@ -1,29 +1,10 @@
 # simple-vue-2d-drag-drop-reorder
 
-## Project setup
-```
-yarn install
-```
+A really basic, no-dependencies, vue + ts drag and drop reorder.
 
-### Compiles and hot-reloads for development
-```
-yarn run serve
-```
+Parent data is never mutated, everything operates on copies.
+You're free to pass a function defining how copies are done.
 
-### Compiles and minifies for production
-```
-yarn run build
-```
+Support won't be provided, but those components should grow for our use.
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Sample data by the band Vulfpeck
