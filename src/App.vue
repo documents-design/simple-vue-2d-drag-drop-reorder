@@ -104,22 +104,17 @@ main {
   overflow-y: scroll;
 }
 
-/* Userland styles */
-.drag-grid {
-}
-.drag-grid *[draggable]:hover {
-}
-.grid-item {
-}
+/* Userland styles
+.drag-grid {}
+.drag-grid *[draggable]:hover {}
+.grid-item {}
 .grid-item.dragged {
   transform: translate(-50%, -50%);
 }
-.grid-item.shadow {
-}
-.grid-item.target {
-}
-.grid-item.element {
-}
+.grid-item.shadow {}
+.grid-item.target {}
+.grid-item.element {}
+*/
 
 /* Samples */
 .grid-4 {
@@ -157,9 +152,6 @@ main {
   .grid-item.target {
     box-shadow: 0 0 0 red;
   }
-
-  .grid-item.element {
-  }
 }
 
 .grid-8 {
@@ -170,9 +162,6 @@ main {
     flex-wrap: wrap;
     width: 960px;
     margin: 2em auto;
-  }
-
-  .drag-grid *[draggable]:hover {
   }
 
   .grid-item {
@@ -191,12 +180,6 @@ main {
 
   .grid-item.shadow {
     background: darkslateblue;
-  }
-
-  .grid-item.target {
-  }
-
-  .grid-item.element {
   }
 }
 </style>

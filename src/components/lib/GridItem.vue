@@ -19,16 +19,19 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { ElementType } from './types';
 
-@Component({
+import { DragGridPositionInterface } from './DragGrid.vue';
+
+const GridItemProps = Vue.extend({
   props: {
-    type: {},
+    type: Object,
     dragged: Boolean,
     target: Boolean,
     index: Number,
-    pos: {},
+    pos: Object,
   },
-})
-export default class GridItem extends Vue {
+});
+@Component
+export default class GridItem extends GridItemProps {
   public types = ElementType;
 
   get style(): any {
@@ -43,25 +46,3 @@ export default class GridItem extends Vue {
   }
 }
 </script>
-
-<style lang="scss">
-.grid-item {
-
-}
-
-.grid-item.dragged {
-  
-}
-
-.grid-item.shadow {
-  
-}
-
-.grid-item.target {
-  
-}
-
-.grid-item.element {
-  
-}
-</style>
