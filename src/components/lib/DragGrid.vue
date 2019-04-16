@@ -33,7 +33,7 @@ export interface DragGridPositionInterface {
 export interface DragGridDataInterface {
   pos: DragGridPositionInterface;
   copiedItems: ElementInterface[];
-  draggedItems: number | null;
+  draggedItem: number | null;
   targetItem: number | null;
 }
 
@@ -59,7 +59,7 @@ const DragProps = Vue.extend({
         gt: 0,
       },
       copiedItems: [],
-      draggedItems: null,
+      draggedItem: null,
       targetItem: null,
     };
   },

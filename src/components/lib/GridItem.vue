@@ -23,7 +23,7 @@ import { DragGridPositionInterface } from './DragGrid.vue';
 
 const GridItemProps = Vue.extend({
   props: {
-    type: Object,
+    type: Number,
     dragged: Boolean,
     target: Boolean,
     index: Number,

@@ -105,7 +105,7 @@ export const sizeGrid = (c: DragGrid) => {
 };
 
 export const copyItems = (c: DragGrid) => {
-  c.$data.copiedItems = c.$props.cloneFunction(c.$data.items)
+  c.$data.copiedItems = c.$props.cloneFunction(c.$props.items)
     .map(({ uuid, ...rest }: { uuid: any, contents: any }) =>
       ({ uuid, type: ElementType.Element, contents: rest }));
 };
