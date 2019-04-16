@@ -7,15 +7,15 @@
         <pre>&lt;drag-grid
     :items="items"
     @update="updateItems"
-    :clone-function="a => JSON.parse(JSON.stringify(a))"
-    :renderer="$options.components.ItemRenderer"
     &gt;&lt;/drag-grid&gt;</pre>
         <drag-grid
           :items="items"
           @update="updateItems"
-          :clone-function="a => JSON.parse(JSON.stringify(a))"
-          :renderer="$options.components.ItemRenderer"
-        ></drag-grid>
+        >
+          <template v-slot="{ item }">
+            <item-renderer :item="item"/>
+          </template>
+        </drag-grid>
       </div>
     </main>
   </div>

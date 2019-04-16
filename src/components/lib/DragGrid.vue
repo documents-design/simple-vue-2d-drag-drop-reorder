@@ -10,85 +10,59 @@
       @mousedown="dragStart(index, $event)"
       :dragged="isDragged(index)"
     >
-      <component :is="renderer" :item="item.contents"></component>
+        <slot :item="item.contents"></slot>
     </grid-item>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import GridItem from './GridItem.vue';
-import { ElementType, ElementInterface, DragGridDataInterface, DragGridPositionInterface } from './types';
+import { DragGridInterface, ElementInterface } from './types';
 import funcs from './funcs';
 
+@Component({
+    components: {
+        GridItem,
+    },
+})
+export default class DragGrid extends Vue implements DragGridInterface {
+  @Prop({ type: Array, required: true }) public items: ElementInterface[];
 
-const DragProps = Vue.extend({
-  props: {
-    items: Array,
-    cloneFunction: Function,
-    renderer: Function,
-  },
-  watch: {
-    items() {
+  public pos = {
+    l: 0,
+    t: 0,
+    w: 0,
+    h: 0,
+    gl: 0,
+    gt: 0,
+  };
+  public copiedItems = [];
+  public draggedItem = null;
+  public targetItem = null;
+
+  @Watch('items')
+  public onItemsChange() {
       this.copyItems();
-    },
-  },
-  data(): DragGridDataInterface {
-    return {
-      pos: {
-        l: 0,
-        t: 0,
-        w: 0,
-        h: 0,
-        gl: 0,
-        gt: 0,
-      },
-      copiedItems: [],
-      draggedItem: null,
-      targetItem: null,
-    };
-  },
-  components: {
-    GridItem,
-  },
-  methods: {
-    copyItems() {
-      funcs.copyItems(this as DragGrid);
-    },
-  },
-});
-@Component
-export default class DragGrid extends DragProps {
-  get hasDragitem() {
-    return funcs.hasDragitem(this);
+  }
+
+  public copyItems() {
+    funcs.copyItems(this);
   }
 
   public move(e: MouseEvent) {
     funcs.move(this, e);
   }
-  public cleanup() {
-    funcs.cleanup(this);
-  }
+
   public dragStart(index: number, event: MouseEvent) {
     funcs.dragStart(this, index, event);
   }
   public drop() {
     funcs.drop(this);
   }
-  public insertPlaceholderAt(index: number) {
-    funcs.insertPlaceholderAt(this, index);
-  }
-  public performSwap(dragged: number, target: number) {
-    funcs.performSwap(this, dragged, target);
-  }
-  public removeDragHolder() {
-    funcs.removeDragHolder(this);
-  }
+
   public sizeGrid() {
     funcs.sizeGrid(this);
-  }
-  public tryToMovePlaceholder() {
-    funcs.tryToMovePlaceholder(this);
   }
 
   public isDragged(index: number) {
