@@ -63,7 +63,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      items: lyrics.map((val) => ({ uuid: ++id, text: val })),
+      items: lyrics.map((val) => ({ uuid: 'uuid-' + id++, text: val })),
     };
   },
   methods: {
@@ -134,7 +134,7 @@ main {
   }
 
   .grid-item.dragged {
-    transform: scale(1.1) translate(-50%, -50%);
+    transform: scale(1) translate(-50%, -50%);
   }
 
   .grid-item.shadow {
