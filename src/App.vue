@@ -51,7 +51,7 @@ const lyrics = [
 ];
 
 interface LyricInterface {
-  uuid: number;
+  uuid: string;
   text: string;
 }
 
