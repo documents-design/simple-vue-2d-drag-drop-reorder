@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import GridItem from './GridItem.vue';
 import f from './funcs';
 
