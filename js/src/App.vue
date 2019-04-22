@@ -110,63 +110,56 @@ main {
     width: 860px;
     margin: 2em auto;
   }
+  * {
+    box-sizing: border-box;
+  }
   .drag-grid {
+    display: flex;
+    flex-wrap: wrap;
     width: 860px;
-    display: flex;
-    flex-wrap: wrap;
-    font-size: 9px;
-    font-family: monospace;
-  }
-  .drag-grid *[draggable]:hover {
-    box-shadow: 2px 2px 0px 0px blue;
-  }
-
-  .grid-item {
-    padding: 1em;
-    flex: 0 0 calc(25% - 1em);
-    background: lightblue;
-    margin: 0.5em;
-  }
-
-  .grid-item.dragged {
-    transform: scale(1) translate(-50%, -50%);
-  }
-
-  .grid-item.shadow {
-    background: slategray;
-  }
-
-  .grid-item.target {
-    box-shadow: 0 0 0 red;
-  }
-}
-
-.grid-8 {
-  width: 100%;
-
-  .drag-grid {
-    display: flex;
-    flex-wrap: wrap;
-    width: 960px;
-    margin: 2em auto;
-  }
-
-  .grid-item {
-    flex: 0 0 calc(12.5% - 32px);
-    padding: 8px;
-    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-      "Lucida Sans", Arial, sans-serif;
-    font-size: 11px;
-    background: whitesmoke;
-    margin: 16px;
-  }
-
-  .grid-item.dragged {
-    transform: translate(-50%, -50%);
-  }
-
-  .grid-item.shadow {
-    background: darkslateblue;
+    margin: auto;
+    position: relative;
+    .drag-overlay {
+      opacity: 0;
+      cursor: pointer;
+      transition: opacity .2s;
+      background: rgba(121, 170, 255, 0.8);
+      position: absolute;
+      &::after {
+        content: "Cliquez pour déplacer";
+      }
+      color: black;
+      top: 0;
+      height: 100%;
+      left: 0;
+      z-index: 2;
+      width: 100%;
+      padding: 2em;
+      font-size: 11px;
+    }
+    .grid-item {
+      &:hover {
+        .drag-overlay {
+          opacity: 1;
+        }
+      }
+      position: relative;
+      flex: 0 0 calc(33% - 16px);
+      background: whitesmoke;
+      padding: 1.5em;
+      &.dragged {
+        transform: translate(-50%, -50%);
+        z-index: 99;
+      }
+      &.shadow {
+        background: lightgray;
+        box-shadow: 0 0 10px black;
+        .drag-overlay {
+          display: none;
+        }
+      }
+      margin: 8px;
+    }
   }
 }
 </style>

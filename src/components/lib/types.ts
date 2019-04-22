@@ -19,8 +19,6 @@ export interface DragGridPositionInterface {
   t: number;
   w: number;
   h: number;
-  gl: number;
-  gt: number;
 }
 
 export interface DragGridInterface extends Vue {

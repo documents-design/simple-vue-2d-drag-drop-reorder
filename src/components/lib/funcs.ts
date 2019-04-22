@@ -6,8 +6,8 @@ export const hasDragitem = (c: DragGridInterface): boolean => {
 
 export const move = (c: DragGridInterface, e: MouseEvent) => {
   if (!hasDragitem(c)) { return; }
-  c.pos.l = e.pageX - c.pos.gl;
-  c.pos.t = e.pageY - c.pos.gt;
+  c.pos.l = e.clientX;
+  c.pos.t = e.clientY;
   tryToMovePlaceholder(c);
 };
 
@@ -55,8 +55,8 @@ export const dragStart = (c: DragGridInterface, index: number, event: MouseEvent
   c.draggedItem = index;
   const el = event.target as HTMLElement;
   const { width, height } = findDraggableItem(el).getBoundingClientRect();
-  c.pos.l = el.offsetLeft;
-  c.pos.t = el.offsetTop;
+  c.pos.l = event.clientX;
+  c.pos.t = event.clientY;
   c.pos.w = width;
   c.pos.h = height;
 };
@@ -68,7 +68,7 @@ export const removeDragHolder = (c: DragGridInterface) => {
 
 export const tryToMovePlaceholder = (c: DragGridInterface) => {
   const el = document
-    .elementsFromPoint(c.pos.l + c.pos.gl, c.pos.t + c.pos.gt)
+    .elementsFromPoint(c.pos.l, c.pos.t)
     .find(
       (e) =>
         e.classList.contains('grid-item') && !e.classList.contains('dragged'),
@@ -76,8 +76,7 @@ export const tryToMovePlaceholder = (c: DragGridInterface) => {
   if (el) {
     const candidate = el.getAttribute('data-index');
     if (candidate !== null) {
-      const index = parseInt(candidate, 10);
-      c.targetItem = index;
+      c.targetItem = parseInt(candidate, 10);
     }
   }
 };
@@ -90,8 +89,6 @@ export const cleanup = (c: DragGridInterface) => {
       t: 0,
       w: 0,
       h: 0,
-      gl: c.pos.gl,
-      gt: c.pos.gt,
     });
 };
 
@@ -101,12 +98,6 @@ export const isDragged = (c: DragGridInterface, index: number) => {
 
 export const isTarget = (c: DragGridInterface, index: number) => {
   return c.targetItem === index;
-};
-
-export const sizeGrid = (c: DragGridInterface) => {
-  const { top, left } = (c.$refs.grid as Element).getBoundingClientRect();
-  c.pos.gt = top;
-  c.pos.gl = left;
 };
 
 export const copyItems = (c: DragGridInterface) => {
@@ -127,6 +118,5 @@ export default {
   cleanup,
   isDragged,
   isTarget,
-  sizeGrid,
   copyItems,
 };

@@ -3,6 +3,7 @@
     <grid-item
       :pos="pos"
       :index="index"
+      :zi="copiedItems.length - index"
       v-for="(item, index) in copiedItems"
       :key="item.uuid + '-' + item.type"
       :target="isTarget(index)"
@@ -10,7 +11,7 @@
       @mousedown="dragStart(index, $event)"
       :dragged="isDragged(index)"
     >
-        <slot :item="item.contents"></slot>
+      <slot :item="item.contents" :index="index" :type="item.type"></slot>
     </grid-item>
   </div>
 </template>
@@ -34,8 +35,6 @@ export default class DragGrid extends Vue implements DragGridInterface {
     t: 0,
     w: 0,
     h: 0,
-    gl: 0,
-    gt: 0,
   };
   public copiedItems = [];
   public draggedItem = null;
@@ -61,10 +60,6 @@ export default class DragGrid extends Vue implements DragGridInterface {
     funcs.drop(this);
   }
 
-  public sizeGrid() {
-    funcs.sizeGrid(this);
-  }
-
   public isDragged(index: number) {
     return funcs.isDragged(this, index);
   }
@@ -75,14 +70,6 @@ export default class DragGrid extends Vue implements DragGridInterface {
   public created() {
     this.copyItems();
   }
-
-  public mounted() {
-    this.sizeGrid();
-    window.addEventListener('resize', this.sizeGrid);
-  }
-  public beforeDestroy() {
-    window.removeEventListener('resize', this.sizeGrid);
-  }
 }
 </script>
 
@@ -90,11 +77,6 @@ export default class DragGrid extends Vue implements DragGridInterface {
 .drag-grid {
   position: relative;
   margin: auto;
-}
-
-.drag-grid *[draggable] {
-  cursor: pointer;
-  box-sizing: border-box;
 }
 
 .drag-grid *::selection {

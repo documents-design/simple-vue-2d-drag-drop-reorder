@@ -1,25 +1,24 @@
 <template>
   <div
-    :class="[
+          :class="[
       'grid-item',
       type === types.Shadow ? 'shadow' : 'element',
       dragged ? 'dragged' : '',
       target ? 'target' : '',
     ]"
-    @mousedown="$emit('mousedown', $event)"
-    :style="style"
-    draggable="true"
-    :data-index="index"
+          :style="style"
+          :data-index="index"
   >
-  <slot></slot>
+    <div style="position:relative; z-index: 1">
+      <slot></slot>
+    </div>
+    <div class="drag-overlay" @mousedown="$emit('mousedown', $event)"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import { ElementType } from './types';
-
-import { DragGridPositionInterface } from './types';
 
 const GridItemProps = Vue.extend({
   props: {
@@ -28,6 +27,7 @@ const GridItemProps = Vue.extend({
     target: Boolean,
     index: Number,
     pos: Object,
+    zi: Number,
   },
 });
 @Component
@@ -35,9 +35,12 @@ export default class GridItem extends GridItemProps {
   public types = ElementType;
 
   get style(): any {
-    if (!this.dragged) { return {}; }
+    if (!this.dragged) { return {
+      position: 'relative',
+      zIndex: this.zi,
+    }; }
     return {
-      position: 'absolute',
+      position: 'fixed',
       left: this.pos.l + 'px',
       top: this.pos.t + 'px',
       width: this.pos.w + 'px',
