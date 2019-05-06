@@ -14,9 +14,9 @@ export const move = (c: DragGridInterface, e: MouseEvent) => {
 export const drop = (c: DragGridInterface) => {
   if (!hasDragitem(c)) { return; }
   if (
-    c.targetItem !== null &&
-    c.draggedItem !== null &&
-    c.targetItem !== c.draggedItem
+      c.targetItem !== null &&
+      c.draggedItem !== null &&
+      c.targetItem !== c.draggedItem
   ) {
     c.$emit('swap', [c.draggedItem, c.targetItem]);
     performSwap(c, c.draggedItem, c.targetItem);
@@ -33,12 +33,12 @@ export const performSwap = (c: DragGridInterface, dragged: number, target: numbe
   c.copiedItems[dragged] = c.copiedItems[realTarget];
   c.copiedItems[realTarget] = tmp;
   c.$emit('update', c.copiedItems
-    .map(({ uuid, contents }: { uuid: any, contents: any }) => ({ uuid, ...contents })));
+      .map(({ contents }: { contents: any }) => contents));
 };
 
 export const insertPlaceholderAt = (c: DragGridInterface, index: number) => {
   c.copiedItems.splice(index, 0, {
-    uuid: c.copiedItems[index].uuid,
+    _dguuid: c.copiedItems[index]._dguuid,
     contents: {},
     type: ElementType.Shadow,
   });
@@ -69,11 +69,11 @@ export const removeDragHolder = (c: DragGridInterface) => {
 
 export const tryToMovePlaceholder = (c: DragGridInterface) => {
   const el = document
-    .elementsFromPoint(c.pos.l, c.pos.t)
-    .find(
-      (e) =>
-        e.classList.contains('grid-item') && !e.classList.contains('dragged'),
-    );
+      .elementsFromPoint(c.pos.l, c.pos.t)
+      .find(
+          (e) =>
+              e.classList.contains('grid-item') && !e.classList.contains('dragged'),
+      );
   if (el) {
     const candidate = el.getAttribute('data-index');
     if (candidate !== null) {
@@ -84,13 +84,13 @@ export const tryToMovePlaceholder = (c: DragGridInterface) => {
 
 export const cleanup = (c: DragGridInterface) => {
   (c.draggedItem = null),
-    (c.targetItem = null),
-    c.$set(c, 'pos', {
-      l: 0,
-      t: 0,
-      w: 0,
-      h: 0,
-    });
+      (c.targetItem = null),
+      c.$set(c, 'pos', {
+        l: 0,
+        t: 0,
+        w: 0,
+        h: 0,
+      });
 };
 
 export const isDragged = (c: DragGridInterface, index: number) => {
@@ -106,8 +106,8 @@ const serde = (a: any): any => JSON.parse(JSON.stringify(a));
 
 export const copyItems = (c: DragGridInterface) => {
   c.copiedItems = (c.$props.cloneFunction || serde)(c.$props.items)
-    .map(({ uuid, ...rest }: { uuid: any, contents: any }) =>
-      ({ uuid, type: ElementType.Element, contents: rest }));
+      .map(({ ...rest }, index) =>
+          ({ _dguuid: `u-${index}`, type: ElementType.Element, contents: rest }));
 };
 
 export default {

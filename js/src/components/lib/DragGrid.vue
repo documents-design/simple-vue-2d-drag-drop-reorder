@@ -5,7 +5,7 @@
             :index="index"
             :zi="copiedItems.length - index"
             v-for="(item, index) in copiedItems"
-            :key="item.uuid + '-' + item.type"
+            :key="item._dguuid + '-' + item.type"
             :target="isTarget(index)"
             :type="item.type"
             @mousedown="dragStart(index, $event)"

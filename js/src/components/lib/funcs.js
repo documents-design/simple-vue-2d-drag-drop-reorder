@@ -33,12 +33,12 @@ export const performSwap = (c, dragged, target) => {
   c.copiedItems[dragged] = c.copiedItems[realTarget];
   c.copiedItems[realTarget] = tmp;
   c.$emit('update', c.copiedItems
-      .map(({ uuid, contents }) => ({ uuid, ...contents })));
+      .map(({ contents }) => contents));
 };
 
 export const insertPlaceholderAt = (c, index) => {
   c.copiedItems.splice(index, 0, {
-    uuid: c.copiedItems[index].uuid,
+    _dguuid: c.copiedItems[index]._dguuid,
     contents: {},
     type: ElementType.Shadow,
   });
@@ -108,8 +108,8 @@ const serde = a => JSON.parse(JSON.stringify(a));
 
 export const copyItems = (c) => {
   c.copiedItems = (c.$props.cloneFunction || serde)(c.$props.items)
-      .map(({ uuid, ...rest }) =>
-          ({ uuid, type: ElementType.Element, contents: rest }));
+      .map(({ ...rest }, index) =>
+          ({ _dguuid: `u-${index}` , type: ElementType.Element, contents: rest }));
 };
 
 export default {

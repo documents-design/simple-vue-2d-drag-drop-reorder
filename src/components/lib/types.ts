@@ -6,7 +6,7 @@ export enum ElementType {
 }
 
 export interface UuidableInterface {
-  uuid: number;
+  _dguuid: string;
 }
 
 export interface ElementInterface extends UuidableInterface {
