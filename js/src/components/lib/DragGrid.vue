@@ -39,6 +39,7 @@
     },
     props: {
       items: Array,
+      cloneFunction: Function,
     },
     methods: {
       copyItems() {

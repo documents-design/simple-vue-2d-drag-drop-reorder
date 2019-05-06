@@ -27,4 +27,5 @@ export interface DragGridInterface extends Vue {
   draggedItem: number | null;
   targetItem: number | null;
   items: ElementInterface[];
+  cloneFunction: <T>(a: T) => T;
 }

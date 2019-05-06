@@ -101,8 +101,11 @@ export const isTarget = (c: DragGridInterface, index: number) => {
   return c.targetItem === index;
 };
 
+/* Serialize/Deserialize */
+const serde = (a: any): any => JSON.parse(JSON.stringify(a));
+
 export const copyItems = (c: DragGridInterface) => {
-  c.copiedItems = JSON.parse(JSON.stringify(c.$props.items))
+  c.copiedItems = (c.$props.cloneFunction || serde)(c.$props.items)
     .map(({ uuid, ...rest }: { uuid: any, contents: any }) =>
       ({ uuid, type: ElementType.Element, contents: rest }));
 };

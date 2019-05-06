@@ -29,6 +29,7 @@ import funcs from './funcs';
 })
 export default class DragGrid extends Vue implements DragGridInterface {
   @Prop({ type: Array, required: true }) public items: ElementInterface[];
+  @Prop({ type: Function, required: false }) public cloneFunction: <T>(a: T) => T;
 
   public pos = {
     l: 0,

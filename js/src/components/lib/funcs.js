@@ -103,8 +103,11 @@ export const tryToMovePlaceholder = (c) => {
   }
 };
 
+/* Serialize / deserialize */
+const serde = a => JSON.parse(JSON.stringify(a));
+
 export const copyItems = (c) => {
-  c.copiedItems = JSON.parse(JSON.stringify(c.$props.items))
+  c.copiedItems = (c.$props.cloneFunction || serde)(c.$props.items)
       .map(({ uuid, ...rest }) =>
           ({ uuid, type: ElementType.Element, contents: rest }));
 };
